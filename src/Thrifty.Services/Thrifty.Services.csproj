@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.0.5</VersionPrefix>
+    <Description>A port of Swift from facebook, an attribute-based library for creating Thrift serializable types and services.</Description>
+    <Copyright>Copyright labijie.com</Copyright>
+    <AssemblyTitle>Thrifty.Services</AssemblyTitle>
+    <Authors>labijie team</Authors>
+    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Thrifty.Services</AssemblyName>
+    <AssemblyOriginatorKeyFile>..\..\assembly.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <RootNamespace>Thrifty</RootNamespace>
+    <PackageId>Thrifty.Services</PackageId>
+    <PackageTags>RPC;Thrift;Netty;Facebook Nifty;Facebook Swift</PackageTags>
+    <PackageProjectUrl>http://labijie.com</PackageProjectUrl>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\GlobalAssemblyInfo.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Thrifty.Nifty.Client\Thrifty.Nifty.Client.csproj" />
+  </ItemGroup>
+  <!--<ItemGroup>
+    <PackageReference Include="Castle.Core" Version="4.0.0" />
+  </ItemGroup>-->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Reflection" />
+    <Reference Include="System.Reflection.Emit" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <LastBuild Condition="'$(TargetFrameworks)' != ''" Include="$(TargetFrameworks.Trim(';').EndsWith($(TargetFramework)))" />
+  </ItemGroup>
+  <Target Name="OutputPackage" AfterTargets="Build" Condition="'@(LastBuild)' == 'true' And '$(Configuration)' == 'Release'">
+    <Exec Command="dotnet pack --no-build -c Release --output ..\..\Output" />
+  </Target>
+</Project>

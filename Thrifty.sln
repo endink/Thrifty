@@ -1,0 +1,129 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD94B480-F25E-4869-B55E-0674490BF85A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9D6CC1E-E8A9-43A4-AA9D-61571C31D1B1}"
+	ProjectSection(SolutionItems) = preProject
+		assembly.snk = assembly.snk
+		del-bin.bat = del-bin.bat
+		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+		LICENSE = LICENSE
+		README.md = README.md
+		run-benchmark.bat = run-benchmark.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{30339955-A358-4D08-923E-82BFA5DF2B97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C3B1D350-D3B7-45D3-A549-1A4D2578780B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ribbon.Test", "test\Ribbon.Test\Ribbon.Test.csproj", "{F8CB6F2F-E81E-42AF-901A-60FA6B86D032}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Tests", "test\Swifty.Tests\Thrifty.Tests.csproj", "{8E60B489-9949-42FF-BE7C-DF2E63587DF9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Benchmark", "test\Swifty.Benchmark\Thrifty.Benchmark.csproj", "{5E381C23-0861-441C-B7FB-DFC8EE54F5CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Samples.Common", "samples\Thrifty.Samples.Common\Thrifty.Samples.Common.csproj", "{FB4013B3-ACD9-4B86-B2EA-687967F05BCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Samples.NiftyClient", "samples\Thrifty.Samples.NiftyClient\Thrifty.Samples.NiftyClient.csproj", "{08046333-4F8C-4878-A48A-9545499F8881}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Samples.NiftyServer", "samples\Thrifty.Samples.NiftyServer\Thrifty.Samples.NiftyServer.csproj", "{42E6C0C2-6CA3-4600-8AEE-11BEDC039A71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Core", "src\Thrifty.Core\Thrifty.Core.csproj", "{EEC84C10-C69E-46DA-909A-318759F9BB81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.MicroServices", "src\Thrifty.MicroServices\Thrifty.MicroServices.csproj", "{4D3EC4B3-0582-4CEA-817D-C8CD487556F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Nifty", "src\Thrifty.Nifty\Thrifty.Nifty.csproj", "{128FD475-3B68-4C63-AE7D-C70A2A558464}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Nifty.Client", "src\Thrifty.Nifty.Client\Thrifty.Nifty.Client.csproj", "{EDC70121-B43E-47FA-A258-20C9EBDBCD1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thrifty.Services", "src\Thrifty.Services\Thrifty.Services.csproj", "{4C64181C-77F7-4B0B-9C0F-DB76FE7681C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8CB6F2F-E81E-42AF-901A-60FA6B86D032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8CB6F2F-E81E-42AF-901A-60FA6B86D032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8CB6F2F-E81E-42AF-901A-60FA6B86D032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8CB6F2F-E81E-42AF-901A-60FA6B86D032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E60B489-9949-42FF-BE7C-DF2E63587DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E60B489-9949-42FF-BE7C-DF2E63587DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E60B489-9949-42FF-BE7C-DF2E63587DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E60B489-9949-42FF-BE7C-DF2E63587DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E381C23-0861-441C-B7FB-DFC8EE54F5CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E381C23-0861-441C-B7FB-DFC8EE54F5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E381C23-0861-441C-B7FB-DFC8EE54F5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E381C23-0861-441C-B7FB-DFC8EE54F5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB4013B3-ACD9-4B86-B2EA-687967F05BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB4013B3-ACD9-4B86-B2EA-687967F05BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB4013B3-ACD9-4B86-B2EA-687967F05BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB4013B3-ACD9-4B86-B2EA-687967F05BCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08046333-4F8C-4878-A48A-9545499F8881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08046333-4F8C-4878-A48A-9545499F8881}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08046333-4F8C-4878-A48A-9545499F8881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08046333-4F8C-4878-A48A-9545499F8881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42E6C0C2-6CA3-4600-8AEE-11BEDC039A71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42E6C0C2-6CA3-4600-8AEE-11BEDC039A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42E6C0C2-6CA3-4600-8AEE-11BEDC039A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42E6C0C2-6CA3-4600-8AEE-11BEDC039A71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEC84C10-C69E-46DA-909A-318759F9BB81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEC84C10-C69E-46DA-909A-318759F9BB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEC84C10-C69E-46DA-909A-318759F9BB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEC84C10-C69E-46DA-909A-318759F9BB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3EC4B3-0582-4CEA-817D-C8CD487556F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D3EC4B3-0582-4CEA-817D-C8CD487556F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D3EC4B3-0582-4CEA-817D-C8CD487556F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D3EC4B3-0582-4CEA-817D-C8CD487556F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128FD475-3B68-4C63-AE7D-C70A2A558464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128FD475-3B68-4C63-AE7D-C70A2A558464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128FD475-3B68-4C63-AE7D-C70A2A558464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128FD475-3B68-4C63-AE7D-C70A2A558464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDC70121-B43E-47FA-A258-20C9EBDBCD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDC70121-B43E-47FA-A258-20C9EBDBCD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDC70121-B43E-47FA-A258-20C9EBDBCD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDC70121-B43E-47FA-A258-20C9EBDBCD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C64181C-77F7-4B0B-9C0F-DB76FE7681C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C64181C-77F7-4B0B-9C0F-DB76FE7681C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C64181C-77F7-4B0B-9C0F-DB76FE7681C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C64181C-77F7-4B0B-9C0F-DB76FE7681C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F8CB6F2F-E81E-42AF-901A-60FA6B86D032} = {C3B1D350-D3B7-45D3-A549-1A4D2578780B}
+		{8E60B489-9949-42FF-BE7C-DF2E63587DF9} = {C3B1D350-D3B7-45D3-A549-1A4D2578780B}
+		{5E381C23-0861-441C-B7FB-DFC8EE54F5CE} = {C3B1D350-D3B7-45D3-A549-1A4D2578780B}
+		{FB4013B3-ACD9-4B86-B2EA-687967F05BCB} = {30339955-A358-4D08-923E-82BFA5DF2B97}
+		{08046333-4F8C-4878-A48A-9545499F8881} = {30339955-A358-4D08-923E-82BFA5DF2B97}
+		{42E6C0C2-6CA3-4600-8AEE-11BEDC039A71} = {30339955-A358-4D08-923E-82BFA5DF2B97}
+		{EEC84C10-C69E-46DA-909A-318759F9BB81} = {AD94B480-F25E-4869-B55E-0674490BF85A}
+		{4D3EC4B3-0582-4CEA-817D-C8CD487556F7} = {AD94B480-F25E-4869-B55E-0674490BF85A}
+		{128FD475-3B68-4C63-AE7D-C70A2A558464} = {AD94B480-F25E-4869-B55E-0674490BF85A}
+		{EDC70121-B43E-47FA-A258-20C9EBDBCD1B} = {AD94B480-F25E-4869-B55E-0674490BF85A}
+		{4C64181C-77F7-4B0B-9C0F-DB76FE7681C3} = {AD94B480-F25E-4869-B55E-0674490BF85A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D02FF9E-D7B7-42AB-B401-1525E1AC7912}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal

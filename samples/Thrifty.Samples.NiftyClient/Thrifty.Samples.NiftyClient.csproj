@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>Thrifty.Samples.NiftyClient</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Thrifty.Samples.NiftyClient</PackageId> 
+    <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RuntimeIdentifiers>win10-x64;centos.7-x64;win7-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ca.crt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ca.crt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thrifty.Samples.Common\Thrifty.Samples.Common.csproj" />
+    <ProjectReference Include="..\Thrifty.Samples.NiftyServer\Thrifty.Samples.NiftyServer.csproj" /> 
+  </ItemGroup>
+
+</Project>

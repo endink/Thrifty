@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Thrifty.Samples.NiftyClient": {
+      "commandName": "Project",
+      "commandLineArgs": "10.66.30.50 10 5"
+    }
+  }
+}

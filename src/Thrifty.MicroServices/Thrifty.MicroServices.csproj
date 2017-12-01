@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.0.5</VersionPrefix>
+    <Description>Thrift integrated Eureka realizes service discovery and service registration.</Description>
+    <Copyright>Copyright labijie.com</Copyright>
+    <AssemblyTitle>Thrifty.MicroServices</AssemblyTitle>
+    <Authors>labijie team</Authors>
+    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591;CS8002</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Thrifty.MicroServices</AssemblyName>
+    <!--<AssemblyOriginatorKeyFile>..\..\assembly.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>-->
+    <PackageId>Thrifty.MicroServices</PackageId>
+    <PackageTags>RPC;Thrift;Netty;Facebook Nifty;Facebook Swift;Eureka</PackageTags>
+    <PackageProjectUrl>http://labijie.com</PackageProjectUrl>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\GlobalAssemblyInfo.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Thrifty.Core\Thrifty.Core.csproj" />
+    <ProjectReference Include="..\Thrifty.Services\Thrifty.Services.csproj" />
+    <ProjectReference Include="..\Thrifty.Nifty.Client\Thrifty.Nifty.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Steeltoe.Discovery.Eureka.Client" Version="1.0.1" />
+    <PackageReference Include="Chopin.Pooling" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <LastBuild Condition="'$(TargetFrameworks)' != ''" Include="$(TargetFrameworks.Trim(';').EndsWith($(TargetFramework)))" />
+  </ItemGroup>
+  <Target Name="OutputPackage" AfterTargets="Build" Condition="'@(LastBuild)' == 'true' And '$(Configuration)' == 'Release'">
+    <Exec Command="dotnet pack --no-build -c Release --output ..\..\Output" />
+  </Target>
+
+</Project>

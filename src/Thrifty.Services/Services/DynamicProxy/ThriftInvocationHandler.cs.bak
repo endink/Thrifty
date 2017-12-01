@@ -1,0 +1,174 @@
+﻿using Castle.DynamicProxy;
+using Thrifty.Nifty.Client;
+using Thrifty.Nifty.Core;
+using Thrifty.Nifty.Duplex;
+using Thrifty.Threading;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Reflection;
+using Thrift;
+using Thrift.Protocol;
+using Thrift.Transport;
+
+
+namespace Thrifty.Services
+{
+    partial class DynamicProxyClientFactory
+    {
+        private class ThriftInvocationHandler : IInterceptor, IDisposable
+        {
+            private string clientDescription;
+            private bool _disposed;
+            private IEnumerable<ThriftClientEventHandler> eventHandlers;
+            private IDictionary<MethodInfo, ThriftMethodHandler> methodHandlers;
+            private TChannelBufferInputTransport inputTransport;
+            private TChannelBufferOutputTransport outputTransport;
+            private int sequenceId = 1;
+
+            public ThriftInvocationHandler(string clientDescription, IRequestChannel channel,
+                IDictionary<MethodInfo, ThriftMethodHandler> methodHandlers,
+                IEnumerable<ThriftClientEventHandler> immutableList)
+            {
+                this.Channel = channel;
+                this.clientDescription = clientDescription;
+                this.methodHandlers = methodHandlers;
+                this.eventHandlers = immutableList;
+
+                this.inputTransport = new TChannelBufferInputTransport();
+                this.outputTransport = new TChannelBufferOutputTransport();
+
+                TTransportPair transportPair = TTransportPair.FromSeparateTransports(this.inputTransport, this.outputTransport);
+                TProtocolPair protocolPair = channel.ProtocolFactory.GetProtocolPair(transportPair);
+                this.InputProtocol = protocolPair.InputProtocol;
+                this.OutputProtocol = protocolPair.OutputProtocol;
+            }
+
+
+            public IRequestChannel Channel { get; }
+
+            public TProtocol InputProtocol { get; private set; }
+
+            public TProtocol OutputProtocol { get; private set; }
+
+            public void Intercept(IInvocation invocation)
+            {
+                if (this._disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().Name);
+                }
+
+                if (invocation.Method.DeclaringType.Equals(typeof(Object)))
+                {
+                    //重写几个方法。
+                    switch (invocation.Method.Name)
+                    {
+                        case nameof(Object.ToString):
+                            invocation.ReturnValue = clientDescription;
+                            return;
+                        case nameof(Object.Equals):
+                            invocation.ReturnValue = Object.ReferenceEquals(invocation.InvocationTarget, invocation.Arguments[0]);
+                            return;
+                        case nameof(Object.GetHashCode):
+                            invocation.ReturnValue = this.GetHashCode();
+                            return;
+                        default:
+                            throw new ThriftyException($"unsupported method : {invocation.Method.DeclaringType}.{invocation.Method.Name}");
+                    }
+                }
+
+                if (invocation.Arguments.Length == 0 && String.Equals(nameof(IDisposable.Dispose), invocation.Method.Name))
+                {
+                    this.Channel.CloseAsync().GetAwaiter().GetResult();
+                    this.Dispose();
+                    return;
+                }
+
+                if (invocation.Arguments.Length == 0 && String.Equals($"get_{nameof(INiftyClientChannelAware.ClientChannel)}", invocation.Method.Name))
+                {
+                    invocation.ReturnValue = (this.Channel as INiftyClientChannel);
+                    return;
+                }
+
+                try
+                {
+                    Process(invocation);
+                }
+                catch (TException e)
+                {
+                    throw ThriftClientManager.WrapTException(e);
+                }
+            }
+
+
+
+            private void Process(IInvocation invocation)
+            {
+                ThriftMethodHandler methodHandler = null;
+                if (!methodHandlers.TryGetValue(invocation.Method, out methodHandler))
+                {
+                    throw new TApplicationException(TApplicationException.ExceptionType.UnknownMethod, $"Unknown method : '{invocation.Method.Name}'");
+                }
+
+                if (Channel.HasError)
+                {
+                    throw new TTransportException(this.Channel.GetError().Message);
+                }
+
+                EndPoint remoteAddress = null;
+                // Can only get remote address if this is a nifty channel, plain RequestChannel does
+                // not support it
+                INiftyClientChannel niftyClientChannel = this.Channel as INiftyClientChannel;
+                if (niftyClientChannel != null)
+                {
+                    remoteAddress = niftyClientChannel.NettyChannel.RemoteAddress;
+                }
+
+                IClientRequestContext requestContext = new NiftyClientRequestContext(this.InputProtocol, this.OutputProtocol, this.Channel, remoteAddress);
+                ClientContextChain context = new ClientContextChain(eventHandlers, methodHandler.QualifiedName, requestContext);
+                var id = InterLockedEx.GetAndIncrement(ref this.sequenceId);
+                invocation.ReturnValue = methodHandler.Invoke(this.Channel,
+                                            inputTransport,
+                                            outputTransport,
+                                            this.InputProtocol,
+                                            this.OutputProtocol,
+                                            id,
+                                            context,
+                                            invocation.Arguments);
+            }
+
+            ~ThriftInvocationHandler()
+            {
+                Console.WriteLine("~ThriftInvocationHandler");
+                this.Dispose(false);
+            }
+
+            protected void Dispose(bool disposing)
+            {
+                if (!_disposed)
+                {
+                    if (disposing)
+                    {
+                        this.inputTransport?.Dispose();
+                        this.outputTransport?.Dispose();
+                        this.InputProtocol?.Dispose();
+                        this.outputTransport?.Dispose();
+
+                        this.inputTransport = null;
+                        this.outputTransport = null;
+                        this.InputProtocol = null;
+                        this.OutputProtocol = null;
+                    }
+                    _disposed = true;
+                }
+            }
+
+            public void Dispose()
+            {
+                Console.WriteLine("Dispose");
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+        }
+    }
+}
