@@ -41,7 +41,7 @@ dotnet cli version=1.0.4
 'LogCase.Log (Eureka)'|1.104 ms|0.0210 ms|0.0207 ms
 'LogCase.GetMessages (Eureka)'|1.108 ms|0.0182 ms|0.0161 ms
 
-**`locating services  use Eureka，without connection pool`**
+**locating services  use Eureka，with connection pool**
 ```ini
 BenchmarkDotNet=v0.10.8, OS=Windows 10 Redstone 1 (10.0.14393)
 Processor=Intel Core i5-6300HQ CPU 2.30GHz (Skylake), ProcessorCount=4
