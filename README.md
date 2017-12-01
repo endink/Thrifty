@@ -106,3 +106,9 @@ Thrifty support property、method、construction attributed. for example：
         }
     }
 ```
+
+
+# Documents
+
+document is [here](https://github.com/endink/Thrifty/wiki) (Only Chinese documents are available now).
+
