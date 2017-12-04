@@ -6,6 +6,15 @@ Thrifty.Net is a port of [Swift（from facebook）](https://github.com/facebook/
 
 you can write C# attributed object instead of IDL file and IDL generation cli.
 
+
+[![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
+[![nuget](https://img.shields.io/badge/nuget-coming%20soon-ff69b4.svg)]()
+
+|       OS      | Testing |
+|-------------|:----------:|
+|**Linux**|[![test ok](https://img.shields.io/badge/eureka-testing%20pass-green.svg)]() [![test ok](https://img.shields.io/badge/end2end-testing%20pass-green.svg)]()|
+|**Windows**  |[![test ok](https://img.shields.io/badge/eureka-testing%20pass-green.svg)]() [![test ok](https://img.shields.io/badge/end2end-testing%20pass-green.svg)]()|
+
 ## Thrifty Benchmark  
 
 **end to end connection without connection pool**
@@ -89,23 +98,99 @@ Thrifty support property、method、construction attributed. for example：
 
 ```csharp
     [ThriftService("scribe")]
-    public class InMemoryScribe
+    public interface IScribe
     {
-        private readonly List<LogEntry> messages = new List<LogEntry>();
+        [ThriftMethod("getMessages")]
+        List<LogEntry> GetMessages();
 
+        [ThriftMethod]
+        ResultCode Log(List<LogEntry> messages);
+    }
+
+    public class Scribe : IScribe
+    {
         public List<LogEntry> GetMessages()
         {
-            return messages;
+            return new List<LogEntry>
+            {
+                new LogEntry { Category = "c1", Message = Guid.NewGuid().ToString() },
+                new LogEntry { Category = "c2", Message = Guid.NewGuid().ToString() },
+                new LogEntry { Category = "c3", Message = Guid.NewGuid().ToString() }
+            };
         }
 
-        [ThriftMethod("Log")]
         public ResultCode Log(List<LogEntry> messages)
         {
-            this.messages.AddRange(messages);
-            return ResultCode.OK;
+            return ResultCode.TRY_LATER;
         }
     }
 ```
+
+
+# Start Server
+
+```csharp
+ var factory = new LoggerFactory();
+            factory.AddConsole(LogLevel.Debug);
+            var serverConfig = new ThriftyServerOptions
+            {
+                QueueTimeout = TimeSpan.FromMinutes(1),
+                TaskExpirationTimeout = TimeSpan.FromMinutes(1),
+                ConnectionLimit = 10000
+            };
+
+
+            var bootStrap = new ThriftyBootstrap(new object[] { new Scribe() },
+                serverConfig, new InstanceDescription("Sample", "EurekaInstance1", "127.0.0.1"), factory);
+
+            bootStrap
+                .SslConfig(new SslConfig
+                {
+                    CertFile = "server.pfx",
+                    CertPassword = "abc@123",
+                    CertFileProvider = new EmbeddedFileProvider(typeof(Program).GetTypeInfo().Assembly)
+                })
+               .AddService(typeof(IScribe), version: "1.0.0")
+               //true to register into eureka , disable eureka , set to false
+               .EurekaConfig(true, 
+                             new EurekaClientConfig { EurekaServerServiceUrls = "http://192.168.0.10:8761/eureka" })
+               // bind any
+               .Bind(IPAddress.Any.ToString(), 3366)
+               .StartAsync();
+```
+
+# Use Client
+
+```csharp
+var factory = new LoggerFactory();
+using (var client = new ThriftyClient(new ThriftyClientOptions
+{
+    LoggerFactory = factory,
+    ConnectionPoolEnabled = true, // default is true
+    EurekaEnabled = true, //default is true
+    Eureka = new ThriftyClientEurekaConfig { EurekaServerServiceUrls = "http://192.168.0.10:8761/eureka" } //optional
+}))
+{
+    /** *************if without eureka:*****************
+     * 
+        var service = client.Create<Thrifty.IScribe>("127.0.0.1:3366",
+        new ClientSslConfig
+        {
+            CertFile = "ca.crt",
+            FileProvider = new EmbeddedFileProvider(typeof(ClientProgram).GetTypeInfo().Assembly)
+        });
+     */
+    var service = client.Create<Thrifty.IScribe>("1.0.0", "EurekaInstance1",
+        new ClientSslConfig
+        {
+            CertFile = "ca.crt",
+            FileProvider = new EmbeddedFileProvider(typeof(ClientProgram).GetTypeInfo().Assembly)
+        });
+    var logs = service.GetMessages();
+    ...
+}
+```
+
 
 
 # Documents
