@@ -6,6 +6,8 @@ Thrifty.Net is a port of [Swift（from facebook）](https://github.com/facebook/
 
 you can write C# attributed object instead of IDL file and IDL generation cli.
 
+### Thrifty = Thrift + Netty
+
 
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
 [![nuget](https://img.shields.io/badge/nuget-coming%20soon-ff69b4.svg)]()
