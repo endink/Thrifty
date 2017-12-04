@@ -11,6 +11,7 @@ you can write C# attributed object instead of IDL file and IDL generation cli.
 
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
 [![nuget](https://img.shields.io/badge/nuget-coming%20soon-ff69b4.svg)]()
+[![coverage](https://img.shields.io/badge/coverage-92%25-red.svg)]()
 
 |       OS      | Testing |
 |-------------|:----------:|
@@ -199,3 +200,7 @@ using (var client = new ThriftyClient(new ThriftyClientOptions
 
 document is [here](https://github.com/endink/Thrifty/wiki) (Only Chinese documents are available now).
 
+# Dependecy (our another project)
+
+[Chopin](https://github.com/endink/Chopin) 
+> Chopin is a port of Apache Commons Object Pooling Library for .Net, to implement thrifty client connection pool.

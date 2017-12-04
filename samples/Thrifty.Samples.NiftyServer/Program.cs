@@ -46,6 +46,8 @@ namespace Thrifty.Samples
                .EurekaConfig(!String.IsNullOrWhiteSpace(eurekaServer), new EurekaClientConfig { EurekaServerServiceUrls = eurekaServer })
                .Bind(PublicAddress, port)
                .StartAsync();
+
+            ThriftSerializer s = new ThriftSerializer(ThriftSerializer.SerializeProtocol.Binary);
         }
 
         private static void StartServerByAnnotaions()

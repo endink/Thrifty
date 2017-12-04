@@ -37,6 +37,8 @@ namespace Thrifty.Samples
             }
             Console.WriteLine("Finish");
             Console.ReadKey();
+
+            
         }
 
         //private static void Run(object state)
