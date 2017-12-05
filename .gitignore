@@ -7,6 +7,7 @@
 *.userosscache
 *.sln.docstates
 nuget-push.bat
+nuget.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

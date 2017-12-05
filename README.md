@@ -8,9 +8,9 @@ you can write C# attributed object instead of IDL file and IDL generation cli.
 
 ### Thrifty = Thrift + Netty
 
-
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
-[![nuget](https://img.shields.io/badge/nuget-coming%20soon-ff69b4.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/endink/Thrifty/total.svg?style=flat-square)](https://github.com/endink/Thrifty/archive/master.zip)
+[![NuGet](https://img.shields.io/nuget/v/Thrifty.MicroServices.svg)](https://www.nuget.org/packages/Thrifty.MicroServices/)
 [![coverage](https://img.shields.io/badge/coverage-92%25-red.svg)]()
 
 |       OS      | Testing |
