@@ -148,7 +148,7 @@ namespace Thrifty.Nifty.Core
 
         private IPAddress GetIPAddress()
         {
-            if (String.IsNullOrWhiteSpace(_def.Host))
+            if (String.IsNullOrWhiteSpace(_def.Host) || _def.Host == "0.0.0.0")
             {
                 return IPAddress.Any;
             }

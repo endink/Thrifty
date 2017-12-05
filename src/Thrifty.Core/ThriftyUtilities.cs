@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using Thrift.Transport;
 
@@ -11,6 +13,7 @@ namespace Thrifty
 {
     public static class ThriftyUtilities
     {
+
         public static String ForDebugString(this IByteBuffer byteBuffer)
         {
             return String.Format($"buffer rb: {byteBuffer.ReadableBytes}, rix: {byteBuffer.ReaderIndex}");
@@ -104,6 +107,18 @@ namespace Thrifty
 
             // Compile and return the value.
             return e.Compile()();
+        }
+
+        public static IEnumerable<IPAddress> GetLocalIPV4Addresses()
+        {
+            var addresses = from item in NetworkInterface.GetAllNetworkInterfaces()
+                            where item.NetworkInterfaceType == NetworkInterfaceType.Wireless80211
+                                  || item.NetworkInterfaceType == NetworkInterfaceType.Ethernet
+                            from ipc in item.GetIPProperties().UnicastAddresses
+                            let address = ipc.Address
+                            where address.AddressFamily == AddressFamily.InterNetwork
+                            select address;
+            return addresses.ToArray();
         }
     }
 }

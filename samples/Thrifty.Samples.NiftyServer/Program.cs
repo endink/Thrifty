@@ -8,12 +8,14 @@ using Thrifty.Samples.Thrifty;
 using Thrifty.Services;
 using System;
 using System.Reflection;
+using System.Net;
+using Thrifty.Samples.Common;
 
 namespace Thrifty.Samples
 {
     public class Program
     {
-        private const string PublicAddress = "10.66.10.166";
+        private const string PublicAddress = "127.0.0.1";
         public static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -27,12 +29,14 @@ namespace Thrifty.Samples
             factory.AddConsole(LogLevel.Debug);
             var serverConfig = new ThriftyServerOptions
             {
+                EurekaEnabled = !String.IsNullOrWhiteSpace(eurekaServer),
+                Eureka = new EurekaClientConfig() { EurekaServerServiceUrls = eurekaServer },
                 QueueTimeout = TimeSpan.FromMinutes(1),
                 TaskExpirationTimeout = TimeSpan.FromMinutes(1)
             };
 
 
-            var bootStrap = new ThriftyBootstrap(new object[] { new ScribeTest() },
+            var bootStrap = new ThriftyBootstrap(new object[] { new ServiceImpl() },
                 serverConfig, new InstanceDescription("SampleApp", "TestApp122", PublicAddress), factory);
 
             bootStrap
@@ -42,9 +46,9 @@ namespace Thrifty.Samples
                     CertPassword = "1qaz@WSX",
                     CertFileProvider = new EmbeddedFileProvider(typeof(Program).GetTypeInfo().Assembly)
                 })
-               .AddService(typeof(IScribe), "0.0.1")
+               .AddService(typeof(IService), "0.0.1")
                .EurekaConfig(!String.IsNullOrWhiteSpace(eurekaServer), new EurekaClientConfig { EurekaServerServiceUrls = eurekaServer })
-               .Bind(PublicAddress, port)
+               .Bind(IPAddress.Any.ToString(), port)
                .StartAsync();
 
             ThriftSerializer s = new ThriftSerializer(ThriftSerializer.SerializeProtocol.Binary);
