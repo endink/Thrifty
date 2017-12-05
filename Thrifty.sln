@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD94B480-F25
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9D6CC1E-E8A9-43A4-AA9D-61571C31D1B1}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		assembly.snk = assembly.snk
 		del-bin.bat = del-bin.bat
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
