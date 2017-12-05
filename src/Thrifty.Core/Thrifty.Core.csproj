@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>1.0.5</VersionPrefix>
-    <Description>RPC library are 100% compatible with apache thrift services and export thrift 0.93 for .net core.</Description>
+    <Description>An attribute-based library for creating Thrift serializable types and services. Core library that include Thrifty for dotnet core.</Description>
     <Copyright>Copyright labijie.com</Copyright>
     <AssemblyTitle>Thrifty.Core</AssemblyTitle>
     <Authors>labijie team</Authors>

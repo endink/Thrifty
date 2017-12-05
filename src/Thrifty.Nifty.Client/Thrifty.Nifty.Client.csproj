@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>1.0.5</VersionPrefix>
-    <Description>A port of Nifty from facebook, nifty is an implementation of Thrift clients and servers on Netty.</Description>
+    <Description>An attribute-based library for creating Thrift serializable types and services, implementation of Thrift clients and servers on DotNetty.</Description>
     <Copyright>Copyright labijie.com</Copyright>
     <AssemblyTitle>Thrifty.Nifty.Client</AssemblyTitle>
     <Authors>labijie team</Authors>
