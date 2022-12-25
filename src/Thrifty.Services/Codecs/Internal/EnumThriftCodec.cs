@@ -37,11 +37,7 @@ namespace Thrifty.Codecs.Internal
                 }
                 else
                 {
-                    var enumConstants = (T[])Enum.GetValues(_metadata.EnumType);
-                    if (enumValue < enumConstants.Length)
-                    {
-                        return enumConstants[enumValue];
-                    }
+                    return (T)Enum.ToObject(_metadata.EnumType, enumValue);
                 }
             }
             // unknown, throw unknown value exception
@@ -64,7 +60,7 @@ namespace Thrifty.Codecs.Internal
             }
             else
             {
-                enumValue = Array.IndexOf(Enum.GetValues(_metadata.EnumType), enumConstant);
+                enumValue = Convert.ToInt32(enumConstant);
             }
             protocol.WriteI32(enumValue);
         }
