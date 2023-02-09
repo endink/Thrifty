@@ -37,11 +37,7 @@ namespace Thrifty.Codecs.Internal
                 }
                 else
                 {
-                    var enumConstants = (T[])Enum.GetValues(_metadata.EnumType);
-                    if (enumValue < enumConstants.Length)
-                    {
-                        return enumConstants[enumValue];
-                    }
+                    return (T)Enum.ToObject(_metadata.EnumType, enumValue);
                 }
             }
             // unknown, throw unknown value exception
@@ -64,7 +60,13 @@ namespace Thrifty.Codecs.Internal
             }
             else
             {
-                enumValue = Array.IndexOf(Enum.GetValues(_metadata.EnumType), enumConstant);
+                enumValue = Convert.ToInt32(enumConstant);
+            }
+            if (enumValue < 0)
+            {
+                //see https://thrift.apache.org/docs/idl
+                //An enum creates an enumerated type, with named values. If no constant value is supplied, the value is either 0 for the first element, or one greater than the preceding value for any subsequent element. Any constant value that is supplied must be non-negative.
+                throw new ThriftyException($"Enum {_metadata.EnumType.FullName} cannot be negative {enumValue} for {Enum.GetName(typeof(T), enumConstant)}, it must be non-negative.");
             }
             protocol.WriteI32(enumValue);
         }
