@@ -246,3 +246,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /test/Swifty.Benchmark/BenchmarkDotNet.Artifacts/results
+
+/nupkgs/**/*

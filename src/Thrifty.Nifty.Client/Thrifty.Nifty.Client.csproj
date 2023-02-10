@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.0.5</VersionPrefix>
     <Description>An attribute-based library for creating Thrift serializable types and services, implementation of Thrift clients and servers on DotNetty.</Description>
     <Copyright>Copyright labijie.com</Copyright>
     <AssemblyTitle>Thrifty.Nifty.Client</AssemblyTitle>
@@ -24,7 +23,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
   </PropertyGroup>
-
+	<Import Project="..\..\shared.props" />
   <ItemGroup>
     <Compile Include="..\..\GlobalAssemblyInfo.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
   </ItemGroup>
